@@ -1,6 +1,6 @@
 Smart contracts relevant for the MVP of Lamina Finance DEX.
 
-Simulations include the operations that need to interface with Luban. For brevity of this demo it is acknowledged that there will not be searchers but rather a centralized relayer.
+Simulations include the operations that need to interface with CrossCall. For brevity of this demo it is acknowledged that there will not be searchers but rather a centralized relayer.
 
 Basic bridge request will be, for now, a two part request:
 1. lock funds
@@ -11,7 +11,7 @@ Tx bytecode for Simple Account Wallet (default wallet):
 0xb61d27f6000000000000000000000000[target][amount]0000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000
 ```
 
-We require to complete the tx circuit and refund the executor (bundler/ solver) of the bridge, the transaction must execute through account abstraction with the Luban paymaster
+We require to complete the tx circuit and refund the executor (bundler/ solver) of the bridge, the transaction must execute through account abstraction with the CrossCall paymaster
 
 
 ## Deployments:
@@ -24,11 +24,11 @@ We require to complete the tx circuit and refund the executor (bundler/ solver) 
 Flow:
 Frontend makes request to Lamina API
 Lamina API creates the transactions calldata to be executed, min assets required, min assets out
-Lamina API sends calldata, and data to Luban to create userup and lock request data
-Luban will return the userop with nessicary changes and lock request
-both transaction requests will be signed and returned to Luban
-Luban will execute the signed lock request, and then validate the userop
-Userop is (skipping uopool) will get executed by Luban's solver
+Lamina API sends calldata, and data to CrossCall to create userup and lock request data
+CrossCall will return the userop with nessicary changes and lock request
+both transaction requests will be signed and returned to CrossCall
+CrossCall will execute the signed lock request, and then validate the userop
+Userop is (skipping uopool) will get executed by CrossCall's solver
 
 Lamina API needs to return the spot exchange ETH-BTC
 

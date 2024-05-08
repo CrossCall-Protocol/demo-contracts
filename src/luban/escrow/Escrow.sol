@@ -156,7 +156,7 @@ contract Escrow is IEscrow, Initializable, Ownable {
 
   // relay EOA claims from 
   function claim(address asset_, uint256 amount_, address to_) public {
-    require(msg.sender == getHyperlaneMailbox()); // this will later be Luban network
+    require(msg.sender == getHyperlaneMailbox()); // this will later be CrossCall network
 
     bool success;
     if(asset_ == address(0)) {

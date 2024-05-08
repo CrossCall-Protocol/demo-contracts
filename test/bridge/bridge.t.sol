@@ -73,7 +73,7 @@ contract BridgeTest is Utils {
     uint256 gas;
     (bytes memory initCodeEscrow_, address escrowAddress_) = getEscrowInitCode(_SIGNER);
     (bytes memory initCodeEscrow2_, address escrowAddress2_) = getEscrowInitCode(_SIGNER2);
-    //_LubanEscrowFactory.createEscrow(initCodeEscrow_2, bytes32(_SALT));
+    //_CrossCallEscrowFactory.createEscrow(initCodeEscrow_2, bytes32(_SALT));
     // struct Call3 {
     //   address target;
     //   uint256 value;
@@ -84,10 +84,10 @@ contract BridgeTest is Utils {
     // then check desposit and lock
     vm.deal(_SIGNER, 50 ether);
     vm.deal(_SIGNER2, 50 ether);
-    // abi.encode(_LubanEscrowAddress, abi.encodeWithSignature(", arg);)
+    // abi.encode(_CrossCallEscrowAddress, abi.encodeWithSignature(", arg);)
     vm.startPrank(_SIGNER2);
     Multicall.Call3[] memory calls = new Multicall.Call3[](3);
-    calls[0] = Multicall.Call3(_LubanEscrowFactoryAddress, 0, abi.encodeWithSignature("createEscrow(bytes memory,bytes32)", initCodeEscrow2_, bytes32(_SALT)));
+    calls[0] = Multicall.Call3(_CrossCallEscrowFactoryAddress, 0, abi.encodeWithSignature("createEscrow(bytes memory,bytes32)", initCodeEscrow2_, bytes32(_SALT)));
     calls[1] = Multicall.Call3(escrowAddress2_, 5 ether, abi.encodeWithSignature("deposit(address,uint256)", address(0), 5 ether));
     calls[2] = Multicall.Call3(escrowAddress2_, 0, abi.encodeWithSignature("extendLock()"));
     gas = gasleft();
@@ -120,7 +120,7 @@ contract BridgeTest is Utils {
     (bytes memory initCode_, address simpleAccount2_) = getWalletInitCode(signer);
 
     Multicall.Call3[] memory calls = new Multicall.Call3[](3);
-    calls[0] = Multicall.Call3(_LubanEscrowFactoryAddress, 0, abi.encodeWithSignature("createEscrow(bytes memory,bytes32)", initCodeEscrow2_, bytes32(_SALT)));
+    calls[0] = Multicall.Call3(_CrossCallEscrowFactoryAddress, 0, abi.encodeWithSignature("createEscrow(bytes memory,bytes32)", initCodeEscrow2_, bytes32(_SALT)));
 
     address rando = address(bytes20(keccak256(abi.encode("test wallet"))));
     console.log("rando before", rando, rando.balance);
@@ -136,7 +136,7 @@ contract BridgeTest is Utils {
     userOperationUnpacked.preVerificationGas = 20000000;
     userOperationUnpacked.maxFeePerGas = 3;
     userOperationUnpacked.maxPriorityFeePerGas = 2;
-    userOperationUnpacked.paymaster = _LubanPaymasterAddress;
+    userOperationUnpacked.paymaster = _CrossCallPaymasterAddress;
     userOperationUnpacked.paymasterVerificationGasLimit = 10000000;
     userOperationUnpacked.paymasterPostOpGasLimit = 10000000;
     userOperationUnpacked.paymasterData = abi.encodePacked(signer, uint256(11155111), address(0), uint256(5 ether));
@@ -160,7 +160,7 @@ contract BridgeTest is Utils {
   //   signature: new bytes(0)
   // });
 
-    payable(_entryPointAddress).call{value: 5 ether}(abi.encodeWithSignature("depositTo(address)", _LubanPaymasterAddress));
+    payable(_entryPointAddress).call{value: 5 ether}(abi.encodeWithSignature("depositTo(address)", _CrossCallPaymasterAddress));
     payable(_entryPointAddress).call{value: 5 ether}(abi.encodeWithSignature("depositTo(address)", msg.sender));
     payable(_entryPointAddress).call{value: 5 ether}(abi.encodeWithSignature("depositTo(address)", msg.sender));
 
@@ -182,11 +182,11 @@ contract BridgeTest is Utils {
     userops_[0] = userop_;
 
 
-    vm.deal(_LubanPaymasterAddress, 50 ether);
-    console.log("paymaster before", _entryPoint.balanceOf(_LubanPaymasterAddress));
+    vm.deal(_CrossCallPaymasterAddress, 50 ether);
+    console.log("paymaster before", _entryPoint.balanceOf(_CrossCallPaymasterAddress));
     // execute userop
     _entryPoint.handleOps(userops_, payable(msg.sender));
-    console.log("paymaster after", _entryPoint.balanceOf(_LubanPaymasterAddress));
+    console.log("paymaster after", _entryPoint.balanceOf(_CrossCallPaymasterAddress));
 
     console.log("msg sender", msg.sender);
     console.log("enrtypoint", _entryPointAddress);
@@ -259,7 +259,7 @@ contract BridgeTest is Utils {
     // }
     (address signer, uint256 signerPk) = makeAddrAndKey("new signer");
     (bytes memory _payload, ) = getEscrowInitCode(signer);
-    address escrowAddress_ = _LubanEscrowFactory.createEscrow(_payload, bytes32(_SALT));
+    address escrowAddress_ = _CrossCallEscrowFactory.createEscrow(_payload, bytes32(_SALT));
     // should be multicall to calls createEscrow, extendTimelock, and deposit
     IEscrow(escrowAddress_).depositAndLock{value: 5 ether}(address(0), 10 ether);
     //console.log("before(0x1804c8ab1f12e6bbf3894d4083f33e07309d1f38).balance 

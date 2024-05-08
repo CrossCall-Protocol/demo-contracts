@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/utils/Create2.sol";
 /**
  * @author  Qi Protocol - Charles Taylor
  * @title   A factory contract to create private escrow.
- * @dev     Called by Luban relay.
+ * @dev     Called by CrossCall relay.
  * @notice  .
  */
 
@@ -53,7 +53,7 @@ contract EscrowFactory {
 
     /**
      * @notice  returns the proxy creationCode external method.
-     * @dev     used by Luban to calcudate the escrow address.
+     * @dev     used by CrossCall to calcudate the escrow address.
      * @return  bytes  .
      */
     function proxyCode() external pure returns (bytes memory) {

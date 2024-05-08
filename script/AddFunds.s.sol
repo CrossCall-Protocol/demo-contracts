@@ -3,11 +3,11 @@ pragma solidity ^0.8.13;
 
 import {Script} from "forge-std/Script.sol";
 import "forge-std/console.sol";
-import {Escrow} from "src/luban/escrow/Escrow.sol";
-import {EscrowFactory} from "src/luban/escrow/EscrowFactory.sol";
-import {Paymaster} from "src/luban/Paymaster.sol";
-import {HyperlaneIGP} from "src/luban/hyperlane/HyperlaneIGP.sol";
-import {HyperlaneMailbox} from "src/luban/hyperlane/HyperlaneMailbox.sol";
+import {Escrow} from "src/crossCall/escrow/Escrow.sol";
+import {EscrowFactory} from "src/crossCall/escrow/EscrowFactory.sol";
+import {Paymaster} from "src/crossCall/Paymaster.sol";
+import {HyperlaneIGP} from "src/crossCall/hyperlane/HyperlaneIGP.sol";
+import {HyperlaneMailbox} from "src/crossCall/hyperlane/HyperlaneMailbox.sol";
 import {Multicall} from "src/multicall/Multicall.sol";
 import {EntryPoint, IEntryPoint} from "lib/account-abstraction/contracts/core/EntryPoint.sol";
 import {SimpleAccountFactory} from "lib/account-abstraction/contracts/samples/SimpleAccountFactory.sol";

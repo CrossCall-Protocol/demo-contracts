@@ -2,8 +2,8 @@
 pragma solidity ^0.8.13;
 
 import {Script, console2} from "forge-std/Script.sol";
-import {HyperlaneIGP} from "src/luban/hyperlane/HyperlaneIGP.sol";
-import {HyperlaneMailbox} from "src/luban/hyperlane/HyperlaneMailbox.sol";
+import {HyperlaneIGP} from "src/crossCall/hyperlane/HyperlaneIGP.sol";
+import {HyperlaneMailbox} from "src/crossCall/hyperlane/HyperlaneMailbox.sol";
 
 contract HyperlaneDeploy is Script {
     uint32 domain;
