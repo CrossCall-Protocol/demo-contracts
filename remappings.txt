@@ -1,0 +1,9 @@
+ds-test/=lib/forge-std/lib/ds-test/src/
+forge-std/=lib/forge-std/src/
+@openzeppelin/=lib/openzeppelin-contracts/
+@openzeppelin-upgradeable/=lib/openzeppelin-contracts-upgradeable/
+@4337/=lib/account-abstraction/contracts/
+@utils/=src/utils/
+@interfaces/=src/interfaces/
+@libraries/=src/libraries/
+multicall/=lib/multicall/src/
